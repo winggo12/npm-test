@@ -1,0 +1,19 @@
+{
+  "name": "@winggo12/npm-test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "exit 0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/winggo12/npm-test.git"
+  },
+  "author": "Luis",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/winggo12/npm-test/issues"
+  },
+  "homepage": "https://github.com/winggo12/npm-test#readme"
+}
