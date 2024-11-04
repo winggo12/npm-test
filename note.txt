@@ -73,3 +73,47 @@ resource "kubernetes_service_account" "example" {
     }
   }
 }
+
+#######
+provider "aws" {
+  region = "us-west-2"  # Change this to your desired AWS region
+}
+
+resource "aws_s3_bucket" "my_bucket" {
+  bucket = "a-l-bucket"
+  acl    = "private"
+
+  versioning {
+    enabled = true
+  }
+
+  lifecycle {
+    prevent_destroy = true  # Optional: Prevent accidental deletion
+  }
+
+  tags = {
+    Name        = "a-l-bucket"
+    Environment = "dev"
+  }
+}
+
+resource "aws_s3_bucket_policy" "my_bucket_policy" {
+  bucket = aws_s3_bucket.my_bucket.id
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect = "Allow"
+        Principal = {
+          AWS = "arn:aws:iam::123456789012:root"  # Replace with the ARNs of the accounts you want to grant access
+        }
+        Action = "s3:*"
+        Resource = [
+          "${aws_s3_bucket.my_bucket.arn}/*",
+          aws_s3_bucket.my_bucket.arn
+        ]
+      }
+    ]
+  })
+}
